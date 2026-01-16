@@ -117,7 +117,9 @@ header.header-transparent {
 }
 
 header.header-transparent .logo img,
-header.header-transparent .desktop-nav a {
+header.header-transparent .desktop-nav a,
+header.header-transparent .lang-text-btn,
+header.header-transparent .lang-sep {
   mix-blend-mode: normal; /* Don't invert inside the already inverted container */
 }
 
@@ -132,7 +134,9 @@ header.header-scrolled {
 }
 
 header.header-scrolled .logo img,
-header.header-scrolled .desktop-nav a {
+header.header-scrolled .desktop-nav a,
+header.header-scrolled .lang-text-btn,
+header.header-scrolled .lang-sep {
   mix-blend-mode: difference;
 }
 
@@ -153,7 +157,9 @@ header.header-on-accent .logo img {
 
 header.header-on-accent .nav-links a,
 header.header-on-accent .desktop-nav a,
-header.header-on-accent .btn {
+header.header-on-accent .btn,
+header.header-on-accent .lang-text-btn,
+header.header-on-accent .lang-sep {
   color: white !important;
   border-color: white !important;
   opacity: 1 !important;
@@ -179,14 +185,21 @@ header.header-scrolled .logo img {
 }
 
 .logo img {
-  height: 40px; /* Restored to 40px as per 81f4663 */
+  height: 120px; /* Increased to 120px */
   transition: height 0.4s var(--ease-out);
   filter: brightness(0) invert(1);
 }
 
-/* header.header-scrolled .logo img {
-  height: 40px; 
-} REMOVED: Keep logo size consistent */
+header.header-scrolled .logo img {
+  height: 50px; /* Shrink on scroll to fit 70px header */
+}
+
+/* Ensure actions are horizontal */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
 
 .desktop-nav {
   display: flex;
@@ -629,4 +642,108 @@ header.header-scrolled .logo img {
   .logo {
     margin: 0 auto;
   }
+  
+  /* Make sure cookie banner works on mobile too */
+  .cookie-banner {
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  
+  .cookie-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* === LANGUAGE SWITCHER === */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-right: 1rem;
+}
+
+.lang-sep {
+  opacity: 0.5;
+  font-size: 0.9rem;
+}
+
+.lang-text-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 0.25rem;
+  font-family: var(--font-main);
+  font-weight: 400; /* Default normal */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.lang-text-btn:hover {
+  opacity: 1;
+}
+
+.lang-text-btn.active {
+  font-weight: 800; /* Bold for selected */
+  opacity: 1;
+  text-decoration: underline; /* Optional: adds clarity */
+}
+
+/* Header Scrolled/Accent Adaptations for Lang Btn */
+/* Removed hardcoded colors to rely on mix-blend-mode logic above */
+
+header.header-on-accent .lang-text-btn,
+header.header-on-accent .lang-sep {
+  color: white !important;
+}
+
+/* === COOKIE BANNER === */
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  padding: 1.5rem 4rem;
+  z-index: 1000;
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.cookie-banner.hidden {
+  transform: translateY(100%);
+  pointer-events: none;
+}
+
+.cookie-banner p {
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: var(--color-dark);
+}
+
+.cookie-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.cookie-links {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.cookie-links a {
+  text-decoration: underline;
+  opacity: 0.6;
+}
+.cookie-links a:hover {
+  opacity: 1;
 }
