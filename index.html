@@ -20,13 +20,19 @@
           <img src="./At-your-service-LOGO_ZWART.png" alt="at your service Logo" />
         </a>
         <nav class="desktop-nav">
-          <a href="#method">Aanpak</a>
-          <a href="#services">Diensten</a>
-          <a href="#partners">Partners</a>
-          <a href="#contact">Contact</a>
+          <a href="#method" data-i18n="nav.method">Aanpak</a>
+          <a href="#services" data-i18n="nav.services">Diensten</a>
+          <a href="#partners" data-i18n="nav.partners">Partners</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
         </nav>
         <div class="header-actions">
-           <a href="#contact" class="btn btn-sm btn-dark">Contact</a>
+           <!-- Language Switcher -->
+           <div class="lang-switcher">
+             <button class="lang-text-btn active" data-lang="nl">NL</button>
+             <span class="lang-sep">/</span>
+             <button class="lang-text-btn" data-lang="en">EN</button>
+           </div>
+           <a href="#contact" class="btn btn-sm btn-dark" data-i18n="nav.contact">Contact</a>
         </div>
       </div>
     </header>
@@ -39,17 +45,17 @@
         <div class="hero-shape shape-2"></div>
 
         <div class="container hero-container">
-          <div class="hero-label">✦ APPLIED AI AGENCY</div>
-          <h1>Applied AI - that works<br/><span class="text-italic">for you.</span></h1>
-          <p class="hero-lead">
+          <div class="hero-label" data-i18n="hero.label">✦ APPLIED AI AGENCY</div>
+          <h1><span data-i18n="hero.title">Applied AI - that works</span><br/><span class="text-italic" data-i18n="hero.subtitle">for you.</span></h1>
+          <p class="hero-lead" data-i18n="hero.lead">
             Bij 'at your service' helpen we bedrijven hun volgende stap zetten in AI.
             Van strategie tot implementatie, van serviceplatform tot AI-agents.
           </p>
           <div class="hero-actions">
             <a href="#contact" class="btn btn-lg btn-dark">
-              Start uw project <i data-lucide="arrow-right"></i>
+              <span data-i18n="hero.cta.start">Start uw project</span> <i data-lucide="arrow-right"></i>
             </a>
-            <a href="#services" class="btn btn-lg btn-outline">
+            <a href="#services" class="btn btn-lg btn-outline" data-i18n="hero.cta.more">
               Ontdek meer
             </a>
           </div>
@@ -61,29 +67,29 @@
         <div class="container">
           <div class="grid-2-cols">
             <div class="method-text">
-              <span class="label-pill">WHY US?</span>
-              <h2>Echte impact,<br>geen slides.</h2>
+              <span class="label-pill" data-i18n="method.label">WHY US?</span>
+              <h2 data-i18n="method.title">Echte impact,<br>geen slides.</h2>
             </div>
             <div class="method-usps">
                <div class="usp-row">
                  <div class="usp-number">01</div>
                  <div>
-                   <h4>End-to-end</h4>
-                   <p>Van strategie tot implementatie en support. Wij blijven aan boord.</p>
+                   <h4 data-i18n="method.usp1.title">End-to-end</h4>
+                   <p data-i18n="method.usp1.text">Van strategie tot implementatie en support. Wij blijven aan boord.</p>
                  </div>
                </div>
                <div class="usp-row">
                  <div class="usp-number">02</div>
                  <div>
-                   <h4>Snel Resultaat</h4>
-                   <p>POCs in weken. Impact in maanden. Groot denken, klein starten.</p>
+                   <h4 data-i18n="method.usp2.title">Snel Resultaat</h4>
+                   <p data-i18n="method.usp2.text">POCs in weken. Impact in maanden. Groot denken, klein starten.</p>
                  </div>
                </div>
                <div class="usp-row">
                  <div class="usp-number">03</div>
                  <div>
-                   <h4>Mensgericht</h4>
-                   <p>Technologie is een middel. Uw people en processen staan centraal.</p>
+                   <h4 data-i18n="method.usp3.title">Mensgericht</h4>
+                   <p data-i18n="method.usp3.text">Technologie is een middel. Uw people en processen staan centraal.</p>
                  </div>
                </div>
             </div>
@@ -95,8 +101,8 @@
       <section id="services" class="section-card light-section services-section">
         <div class="container">
           <div class="section-header">
-            <span class="label-pill">WHAT WE DO</span>
-            <h2>Onze diensten</h2>
+            <span class="label-pill" data-i18n="services.label">WHAT WE DO</span>
+            <h2 data-i18n="services.title">Onze diensten</h2>
           </div>
           
           <div class="services-track">
@@ -104,14 +110,14 @@
             <div class="service-item">
               <div class="service-icon"><i data-lucide="compass"></i></div>
               <div class="service-content">
-                <h3>Discover</h3>
-                <p class="service-tag">AI Strategie & Discovery</p>
-                <p>Bouw de juiste AI-visie, gebaseerd op echte bedrijfsnoden. We starten met luisteren: waar liggen de pijnpunten, kansen en prioriteiten?</p>
+                <h3 data-i18n="service.1.title">Discover</h3>
+                <p class="service-tag" data-i18n="service.1.tag">AI Strategie & Discovery</p>
+                <p data-i18n="service.1.desc">Bouw de juiste AI-visie, gebaseerd op echte bedrijfsnoden. We starten met luisteren: waar liggen de pijnpunten, kansen en prioriteiten?</p>
                 <ul class="service-list">
-                  <li>Pain point & opportunity workshops</li>
-                  <li>Businesscase & ROI-berekening</li>
-                  <li>AI roadmap op maat</li>
-                  <li>Quick-win selectie</li>
+                  <li data-i18n="service.1.list.1">Pain point & opportunity workshops</li>
+                  <li data-i18n="service.1.list.2">Businesscase & ROI-berekening</li>
+                  <li data-i18n="service.1.list.3">AI roadmap op maat</li>
+                  <li data-i18n="service.1.list.4">Quick-win selectie</li>
                 </ul>
               </div>
               <div class="service-arrow"><i data-lucide="arrow-up-right"></i></div>
@@ -121,14 +127,14 @@
             <div class="service-item">
               <div class="service-icon"><i data-lucide="code-2"></i></div>
               <div class="service-content">
-                <h3>Build</h3>
-                <p class="service-tag">Custom AI-projecten & Automatisatie</p>
-                <p>Maatwerk AI-oplossingen die echte bedrijfsproblemen oplossen.</p>
+                <h3 data-i18n="service.2.title">Build</h3>
+                <p class="service-tag" data-i18n="service.2.tag">Custom AI-projecten & Automatisatie</p>
+                <p data-i18n="service.2.desc">Maatwerk AI-oplossingen die echte bedrijfsproblemen oplossen.</p>
                 <ul class="service-list">
-                  <li>Workflow Automatisatie</li>
-                  <li>XLS– en documentautomatisatie</li>
-                  <li>AI Agents & Copilots</li>
-                  <li>Rapid Prototyping (2-4 wkn)</li>
+                  <li data-i18n="service.2.list.1">Workflow Automatisatie</li>
+                  <li data-i18n="service.2.list.2">XLS– en documentautomatisatie</li>
+                  <li data-i18n="service.2.list.3">AI Agents & Copilots</li>
+                  <li data-i18n="service.2.list.4">Rapid Prototyping (2-4 wkn)</li>
                 </ul>
               </div>
               <div class="service-arrow"><i data-lucide="arrow-up-right"></i></div>
@@ -138,14 +144,14 @@
             <div class="service-item">
               <div class="service-icon"><i data-lucide="server"></i></div>
               <div class="service-content">
-                <h3>Operations</h3>
-                <p class="service-tag">Processen & Data</p>
-                <p>Maak van uw data een strategisch voordeel. Unified data die autonome agents voedt.</p>
+                <h3 data-i18n="service.3.title">Operations</h3>
+                <p class="service-tag" data-i18n="service.3.tag">Processen & Data</p>
+                <p data-i18n="service.3.desc">Maak van uw data een strategisch voordeel. Unified data die autonome agents voedt.</p>
                 <ul class="service-list">
-                  <li>Data integratie (CRM, ERP...)</li>
-                  <li>Unified “single source of truth”</li>
-                  <li>Autonome AI-agents</li>
-                  <li>Event-based automation</li>
+                  <li data-i18n="service.3.list.1">Data integratie (CRM, ERP...)</li>
+                  <li data-i18n="service.3.list.2">Unified “single source of truth”</li>
+                  <li data-i18n="service.3.list.3">Autonome AI-agents</li>
+                  <li data-i18n="service.3.list.4">Event-based automation</li>
                 </ul>
               </div>
               <div class="service-arrow"><i data-lucide="arrow-up-right"></i></div>
@@ -155,14 +161,14 @@
             <div class="service-item">
               <div class="service-icon"><i data-lucide="users"></i></div>
               <div class="service-content">
-                <h3>Service</h3>
-                <p class="service-tag">Serviceplatform voor klanten & employees</p>
-                <p>Geef klanten en medewerkers de service-ervaring die ze verwachten — sneller, persoonlijker en efficiënter.</p>
+                <h3 data-i18n="service.4.title">Service</h3>
+                <p class="service-tag" data-i18n="service.4.tag">Serviceplatform voor klanten & employees</p>
+                <p data-i18n="service.4.desc">Geef klanten en medewerkers de service-ervaring die ze verwachten — sneller, persoonlijker en efficiënter.</p>
                 <ul class="service-list">
-                  <li>Ticketing & case management</li>
-                  <li>Knowledge base met AI-search</li>
-                  <li>Employee service hub</li>
-                  <li>AI Voice Agents</li>
+                  <li data-i18n="service.4.list.1">Ticketing & case management</li>
+                  <li data-i18n="service.4.list.2">Knowledge base met AI-search</li>
+                  <li data-i18n="service.4.list.3">Employee service hub</li>
+                  <li data-i18n="service.4.list.4">AI Voice Agents</li>
                 </ul>
               </div>
               <div class="service-arrow"><i data-lucide="arrow-up-right"></i></div>
@@ -174,8 +180,8 @@
       <!-- Partners Section (New) -->
       <section id="partners" class="section-card accent-section partners-section">
         <div class="container centered">
-           <span class="label-pill" style="border-color: rgba(0,0,0,0.2)">PARTNERSHIPS</span>
-           <h2 class="section-title" style="margin-bottom: 3rem">Onze Partners</h2>
+           <span class="label-pill" style="border-color: rgba(0,0,0,0.2)" data-i18n="partners.label">PARTNERSHIPS</span>
+           <h2 class="section-title" style="margin-bottom: 3rem" data-i18n="partners.title">Onze Partners</h2>
            <div class="partners-logos" style="display: flex; gap: 4rem; flex-wrap: wrap; justify-content: center; align-items: center;">
             <div class="partner-logo">
               <img src="./partner-logo-zendesk.png" alt="Zendesk partner" style="height: 60px; mix-blend-mode: multiply;" />
@@ -193,10 +199,10 @@
       <section id="contact" class="section-card footer-cta">
         <div class="container centered">
           <div class="footer-cta-content">
-            <h2>Klaar om AI te<br>laten werken?</h2>
-            <p>Plan een verkennend gesprek. Samen ontdekken we waar AI het meeste waarde creëert.</p>
+            <h2 data-i18n="footer.cta.title">Klaar om AI te<br>laten werken?</h2>
+            <p data-i18n="footer.cta.text">Plan een verkennend gesprek. Samen ontdekken we waar AI het meeste waarde creëert.</p>
             <a href="mailto:info@at-yourservice.ai" class="btn btn-xl btn-white">
-              Neem contact op <i data-lucide="mail"></i>
+              <span data-i18n="footer.cta.btn">Neem contact op</span> <i data-lucide="mail"></i>
             </a>
           </div>
         </div>
@@ -204,28 +210,41 @@
         <footer class="main-footer">
           <div class="footer-grid">
             <div class="footer-col">
-              <h5>Contact</h5>
+              <h5 data-i18n="footer.col.contact">Contact</h5>
               <a href="mailto:info@at-yourservice.ai">info@at-yourservice.ai</a>
               <p>Antwerp, Belgium</p>
             </div>
             <div class="footer-col">
-              <h5>Menu</h5>
-              <a href="#method">Aanpak</a>
-              <a href="#services">Diensten</a>
-              <a href="#partners">Partners</a>
+              <h5 data-i18n="footer.col.menu">Menu</h5>
+              <a href="#method" data-i18n="nav.method">Aanpak</a>
+              <a href="#services" data-i18n="nav.services">Diensten</a>
+              <a href="#partners" data-i18n="nav.partners">Partners</a>
             </div>
             <div class="footer-col">
-              <h5>Socials</h5>
+              <h5 data-i18n="footer.col.socials">Socials</h5>
               <a href="#">LinkedIn</a>
             </div>
             <div class="footer-col copyright">
-              <p>&copy; 2026 at your service. All rights reserved.</p>
+              <p data-i18n="footer.copyright">&copy; 2026 at your service. All rights reserved.</p>
             </div>
           </div>
         </footer>
       </section>
 
     </main>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner hidden">
+      <p data-i18n="cookie.text">Wij gebruiken cookies om uw ervaring te verbeteren.</p>
+      <div class="cookie-actions">
+        <button id="cookie-accept" class="btn btn-sm btn-dark" data-i18n="cookie.accept">Accepteren</button>
+        <button id="cookie-decline" class="btn btn-sm btn-outline" data-i18n="cookie.decline">Weigeren</button>
+      </div>
+      <div class="cookie-links">
+        <a href="privacy.html" data-i18n="cookie.privacy">Privacybeleid</a>
+        <a href="cookies.html" data-i18n="cookie.policy">Cookiebeleid</a>
+      </div>
+    </div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/lucide@latest"></script>
