@@ -81,29 +81,74 @@ header {
   width: 100%;
   padding: 1.5rem var(--spacing-container);
   z-index: 999;
+  z-index: 999;
   transition: all 0.4s var(--ease-out);
-  mix-blend-mode: difference;
+  mix-blend-mode: normal; /* Changed from difference to isolate background */
   color: white; 
 }
 
-/* Scrolled Header State */
-header.header-scrolled {
-  padding: 0.8rem var(--spacing-container);
-  background: rgba(0, 0, 0, 0.2); /* Slight background for legibility */
-  backdrop-filter: blur(10px);
-  mix-blend-mode: normal; /* Reset blend mode to have normal background */
-  color: white; /* Ensure text visible */
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transition: all 0.4s var(--ease-out);
+  background: transparent;
+  backdrop-filter: none;
 }
 
-/* Header on Accent (Partners) - Force White */
+/* Scrolled Header State */
+header.header-scrolled::before {
+  background: rgba(0, 0, 0, 0.0); /* Transparent dark for glass effect */
+  backdrop-filter: blur(10px);
+}
+
+
+/* === HEADER STATES === */
+
+/* 1. TOP STATE (Transparent) 
+   - Container has difference mode to flip White -> Black against White BG.
+   - Content is Normal to avoid double inversion.
+*/
+header.header-transparent {
+  background: transparent;
+  mix-blend-mode: difference;
+  color: white;
+}
+
+header.header-transparent .logo img,
+header.header-transparent .desktop-nav a {
+  mix-blend-mode: normal; /* Don't invert inside the already inverted container */
+}
+
+/* 2. SCROLLED STATE 
+   - Container is Normal (Glassy Dark BG).
+   - Content is Difference to react to page content (Light -> Dark, Dark -> Light).
+*/
+header.header-scrolled {
+  /* BG moved to ::before */
+  mix-blend-mode: normal; 
+  color: white; 
+}
+
+header.header-scrolled .logo img,
+header.header-scrolled .desktop-nav a {
+  mix-blend-mode: difference;
+}
+
+/* 3. ACCENT STATE (Partners)
+   - Force everything to Normal + White.
+   - Overrides both previous states.
+*/
 header.header-on-accent {
-  /* mix-blend-mode handled in JS to ensure reliability */
   color: white !important;
+  mix-blend-mode: normal !important;
   border-bottom: none;
 }
 
 header.header-on-accent .logo img {
   filter: brightness(0) invert(1) !important; /* Force white */
+  mix-blend-mode: normal !important;
 }
 
 header.header-on-accent .nav-links a,
@@ -112,11 +157,11 @@ header.header-on-accent .btn {
   color: white !important;
   border-color: white !important;
   opacity: 1 !important;
+  mix-blend-mode: normal !important;
 }
 
 header.header-on-accent .desktop-nav {
-  /* Ensure glass effect is visible if desired, or transparent if preferred. 
-     Keeping it consistent with scrolled state but allowing background color */
+  /* Optional: explicit background control if needed */
   background: rgba(0, 0, 0, 0.2) !important; 
 }
 
@@ -134,20 +179,20 @@ header.header-scrolled .logo img {
 }
 
 .logo img {
-  height: 70px; /* Initial large size */
+  height: 40px; /* Restored to 40px as per 81f4663 */
   transition: height 0.4s var(--ease-out);
   filter: brightness(0) invert(1);
 }
 
-header.header-scrolled .logo img {
-  height: 40px; /* Shrunk size */
-}
+/* header.header-scrolled .logo img {
+  height: 40px; 
+} REMOVED: Keep logo size consistent */
 
 .desktop-nav {
   display: flex;
   gap: 3rem;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.1); /* Restored */
+  /* backdrop-filter: blur(10px); REMOVED: Fixes text blending isolation */
   padding: 0.75rem 2rem;
   border-radius: var(--radius-pill);
 }
@@ -557,6 +602,24 @@ header.header-scrolled .logo img {
     grid-template-columns: 1fr 1fr;
   }
   
+  /* Disable sticky stacking on mobile to prevent scroll locking */
+  .section-card {
+    position: relative;
+    top: auto;
+    min-height: auto;
+    overflow: visible;
+    border-radius: 0; /* Remove rounded tops for cleaner flow */
+  }
+
+  .section-card:first-of-type {
+    border-radius: 0;
+  }
+
+  /* Add spacing between sections since they don't overlap anymore */
+  .section-card + .section-card {
+    border-top: 1px solid var(--color-border);
+  }
+
   .header-inner {
     justify-content: center;
   }
