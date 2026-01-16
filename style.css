@@ -1,6 +1,6 @@
 /* Font Import */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap'); /* For the italic accents */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
 
 :root {
   /* Colors */
@@ -14,7 +14,7 @@
 
   /* Typography */
   --font-main: 'Outfit', sans-serif;
-  --font-serif: 'DM Serif Display', serif; /* Optional for that "editorial" italic look */
+  --font-serif: 'DM Serif Display', serif;
   
   --text-display: clamp(4rem, 11vw, 9rem);
   --text-h1: clamp(3rem, 7vw, 6rem);
@@ -23,10 +23,11 @@
   --text-body: clamp(1.125rem, 1.5vw, 1.35rem);
 
   /* Dimensions */
-  --radius-section: 60px; /* Big rounded corners for stacking */
+  --radius-section: 60px;
   --radius-pill: 999px;
   --spacing-container: 5vw;
-  --header-height: 80px;
+  --header-height: 100px;
+  --header-height-scrolled: 70px; /* Reduced height on scroll */
 
   /* Easing */
   --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -45,7 +46,7 @@ html {
 
 body {
   font-family: var(--font-main);
-  background-color: var(--color-dark); /* Background behind the stacked cards */
+  background-color: var(--color-dark);
   color: var(--color-dark);
   line-height: 1.2;
   overflow-x: hidden;
@@ -80,9 +81,48 @@ header {
   width: 100%;
   padding: 1.5rem var(--spacing-container);
   z-index: 999;
-  transition: transform 0.3s ease;
-  mix-blend-mode: difference; /* Makes it visible on both light/dark */
+  transition: all 0.4s var(--ease-out);
+  mix-blend-mode: difference;
   color: white; 
+}
+
+/* Scrolled Header State */
+header.header-scrolled {
+  padding: 0.8rem var(--spacing-container);
+  background: rgba(0, 0, 0, 0.2); /* Slight background for legibility */
+  backdrop-filter: blur(10px);
+  mix-blend-mode: normal; /* Reset blend mode to have normal background */
+  color: white; /* Ensure text visible */
+}
+
+/* Header on Accent (Partners) - Force White */
+header.header-on-accent {
+  /* mix-blend-mode handled in JS to ensure reliability */
+  color: white !important;
+  border-bottom: none;
+}
+
+header.header-on-accent .logo img {
+  filter: brightness(0) invert(1) !important; /* Force white */
+}
+
+header.header-on-accent .nav-links a,
+header.header-on-accent .desktop-nav a,
+header.header-on-accent .btn {
+  color: white !important;
+  border-color: white !important;
+  opacity: 1 !important;
+}
+
+header.header-on-accent .desktop-nav {
+  /* Ensure glass effect is visible if desired, or transparent if preferred. 
+     Keeping it consistent with scrolled state but allowing background color */
+  background: rgba(0, 0, 0, 0.2) !important; 
+}
+
+/* Ensure logo stays correct color when header scrolled */
+header.header-scrolled .logo img {
+  filter: brightness(0) invert(1);
 }
 
 .header-inner {
@@ -94,8 +134,13 @@ header {
 }
 
 .logo img {
-  height: 40px;
-  filter: brightness(0) invert(1); /* Force white logo for mix-blend-mode */
+  height: 70px; /* Initial large size */
+  transition: height 0.4s var(--ease-out);
+  filter: brightness(0) invert(1);
+}
+
+header.header-scrolled .logo img {
+  height: 40px; /* Shrunk size */
 }
 
 .desktop-nav {
@@ -167,16 +212,15 @@ header {
   top: 0;
   min-height: 100vh;
   width: 100%;
-  display: flex; /* Helps center content vertically */
+  display: flex;
   flex-direction: column;
   justify-content: center;
   border-radius: var(--radius-section) var(--radius-section) 0 0;
   box-shadow: 0 -10px 50px rgba(0,0,0,0.1);
   overflow: hidden;
-  padding: 6rem 0; /* Vertical spacing */
+  padding: 6rem 0;
 }
 
-/* Remove border radius for first item to look seamless */
 .section-card:first-of-type {
   border-radius: 0;
 }
@@ -184,6 +228,8 @@ header {
 .hero-section {
   background-color: var(--color-light);
   z-index: 1;
+  overflow: hidden; /* For shapes */
+  position: sticky;
 }
 
 .dark-section {
@@ -208,7 +254,7 @@ header {
   color: white;
   z-index: 5;
   min-height: 100vh;
-  justify-content: space-between; /* Space between CTA and Footer Links */
+  justify-content: space-between;
   padding-bottom: 0;
 }
 
@@ -216,6 +262,8 @@ header {
   width: 90vw;
   max-width: 1600px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2; /* Content above shapes */
 }
 
 .centered {
@@ -225,7 +273,7 @@ header {
   align-items: center;
 }
 
-/* === HERO === */
+/* === HERO & SHAPES === */
 .hero-label {
   font-size: 1rem;
   font-weight: 600;
@@ -256,6 +304,38 @@ header {
 .hero-actions {
   display: flex;
   gap: 1rem;
+}
+
+/* HERO SHAPES */
+.hero-shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  opacity: 0.6;
+  animation: float 10s infinite ease-in-out;
+}
+
+.shape-1 {
+  width: 600px;
+  height: 600px;
+  background: var(--color-accent); /* Orange */
+  top: -10%;
+  right: -10%;
+}
+
+.shape-2 {
+  width: 500px;
+  height: 500px;
+  background: var(--color-secondary); /* Blue */
+  bottom: 0%;
+  left: -5%;
+  animation-delay: -5s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -30px) scale(1.1); }
 }
 
 /* === LABELS === */
@@ -309,7 +389,7 @@ header {
 }
 
 .service-item h3 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
   letter-spacing: -1px;
@@ -322,6 +402,13 @@ header {
   color: var(--color-secondary);
   margin-bottom: 1.5rem;
   letter-spacing: 1px;
+  min-height: 2.4em; /* Ensure 2 lines of space for tags */
+}
+
+/* Description text */
+.service-content > p:not(.service-tag) {
+  min-height: 10rem; /* Increased to ensure alignment for 4-line texts */
+  margin-bottom: 0;
 }
 
 .service-list {
@@ -367,7 +454,7 @@ header {
   display: flex;
   gap: 2rem;
   padding: 2rem 0;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0,255,255,0.1); /* Tweaked for dark bg */
 }
 
 .usp-number {
@@ -375,6 +462,7 @@ header {
   font-weight: 800;
   font-family: var(--font-serif);
   opacity: 0.4;
+  color: var(--color-accent);
 }
 
 .usp-row h4 {
@@ -385,6 +473,13 @@ header {
 
 .usp-row p {
   opacity: 0.8;
+}
+
+/* Partner Logos */
+.partners-logos img {
+  height: 120px !important; /* Force bigger size */
+  max-width: 250px;
+  object-fit: contain;
 }
 
 /* === FOOTER === */

@@ -1,48 +1,60 @@
+// Main JavaScript file
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('Website loaded - Striking Design Active');
+// Header logic:
+// 1. Default (CSS) is Normal + White text (Safe).
+// 2. At Top (<50px) AND Not On Accent -> Add 'header-transparent' (mix-blend-mode: difference).
+// 3. Scrolled (>50px) -> Add 'header-scrolled' (Background + Normal).
+// 4. On Accent -> Force Normal + White.
 
-  // 1. Scroll Reveal Animation
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
-  };
+const header = document.querySelector('header');
+const partnersSection = document.getElementById('partners');
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, observerOptions);
+function checkHeaderState() {
+  const scrollY = window.scrollY;
+  let isOnAccent = false;
 
-  const revealElements = document.querySelectorAll('.card, .philosophy h2, .philosophy p, .feature-section, .cta-footer h2');
-  revealElements.forEach(el => {
-    el.classList.add('reveal-on-scroll'); // Add base class via JS
-    observer.observe(el);
-  });
-
-  // 2. Header Scroll Effect
-  const header = document.querySelector('header');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
+  if (partnersSection) {
+    const rect = partnersSection.getBoundingClientRect();
+    const headerHeight = header.offsetHeight;
+    if (rect.top <= headerHeight && rect.bottom >= 0) {
+      isOnAccent = true;
     }
-  });
+  }
 
-  // 3. Simple Parallax for Hero Orbs
-  document.addEventListener('mousemove', (e) => {
-    const mouseX = e.clientX / window.innerWidth;
-    const mouseY = e.clientY / window.innerHeight;
-    // Parallax logic can be added here
-  });
-
-  // 4. Init Icons
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
+  // Handle Transparent/Difference Mode (Only at top, not on accent)
+  if (scrollY <= 50 && !isOnAccent) {
+    header.classList.add('header-transparent');
   } else {
-    console.warn('Lucide icons not loaded');
+    header.classList.remove('header-transparent');
+  }
+
+  // Handle Scrolled Mode
+  if (scrollY > 50) {
+    header.classList.add('header-scrolled');
+  } else {
+    header.classList.remove('header-scrolled');
+  }
+
+  // Handle Accent Mode (Force White)
+  if (isOnAccent) {
+    header.classList.add('header-on-accent');
+  } else {
+    header.classList.remove('header-on-accent');
+  }
+  
+  // Clean up any inline styles from previous debugging
+  header.style.mixBlendMode = '';
+}
+
+// Attach scroll listener
+window.addEventListener('scroll', checkHeaderState);
+
+// Initial check
+checkHeaderState();
+
+// Initialize Lucide Icons
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.lucide) {
+    lucide.createIcons();
   }
 });
