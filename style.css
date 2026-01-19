@@ -765,39 +765,38 @@ header.header-on-light .btn-dark {
     justify-content: center;
   }
 
-  /* Header mobile */
+  /* Header mobile - only show hamburger button */
+  header {
+    position: fixed;
+    background: transparent;
+    padding: 1rem;
+  }
+
   .header-inner {
-    justify-content: space-between;
+    justify-content: flex-end;
   }
 
-  .desktop-nav {
+  /* Hide logo and other elements in header on mobile */
+  header .logo,
+  header .desktop-nav,
+  header .header-actions .btn,
+  header .header-actions .lang-switcher {
     display: none;
   }
 
-  .header-actions .btn {
-    display: none;
-  }
-
-  .logo img {
-    height: 80px;
-  }
-
-  header.header-scrolled .logo img {
-    height: 45px;
-  }
-
-  /* Mobile hamburger menu */
+  /* Mobile hamburger menu - always visible */
   .mobile-menu-btn {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 5px;
-    width: 30px;
-    height: 30px;
-    background: transparent;
+    width: 40px;
+    height: 40px;
+    background: var(--color-dark);
     border: none;
+    border-radius: 50%;
     cursor: pointer;
-    padding: 0;
+    padding: 10px;
   }
 
   .mobile-menu-btn span {
@@ -833,7 +832,7 @@ header.header-on-light .btn-dark {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+    padding: 2rem;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -844,7 +843,22 @@ header.header-on-light .btn-dark {
     visibility: visible;
   }
 
-  .mobile-nav a {
+  .mobile-nav-logo {
+    margin-bottom: 3rem;
+  }
+
+  .mobile-nav-logo img {
+    height: 80px;
+  }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .mobile-nav-links a {
     color: white;
     font-size: 1.5rem;
     font-weight: 600;
@@ -852,8 +866,20 @@ header.header-on-light .btn-dark {
     letter-spacing: 2px;
   }
 
-  .mobile-nav .lang-switcher {
-    margin-top: 2rem;
+  .mobile-nav-lang {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .mobile-nav-lang .lang-text-btn {
+    color: white;
+    font-size: 1rem;
+  }
+
+  .mobile-nav-lang .lang-sep {
+    color: white;
   }
 
   /* Cookie banner mobile */

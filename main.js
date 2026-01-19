@@ -35,17 +35,14 @@ function setLanguage(lang) {
     }
   });
 
-  // Update Switcher State (Bold active)
-  if (elements.langBtns) {
-    elements.langBtns.forEach(btn => {
-      if (btn.dataset.lang === lang) {
-        btn.classList.add('active');
-        // btn.style.fontWeight = '800'; // Handled by CSS
-      } else {
-        btn.classList.remove('active');
-      }
-    });
-  }
+  // Update Switcher State (Bold active) - both header and mobile nav
+  document.querySelectorAll('.lang-text-btn').forEach(btn => {
+    if (btn.dataset.lang === lang) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
 
   // Persist if consented
   if (state.cookieConsent === 'accepted') {
@@ -214,12 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Close mobile menu when clicking nav links
   if (elements.mobileNav) {
-    elements.mobileNav.querySelectorAll('a').forEach(link => {
+    elements.mobileNav.querySelectorAll('.mobile-nav-links a').forEach(link => {
       link.addEventListener('click', closeMobileMenu);
     });
 
     // Also handle lang buttons in mobile nav
-    elements.mobileNav.querySelectorAll('.lang-text-btn').forEach(btn => {
+    elements.mobileNav.querySelectorAll('.mobile-nav-lang .lang-text-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         setLanguage(btn.dataset.lang);
       });
