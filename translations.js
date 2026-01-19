@@ -19,7 +19,9 @@ export const translations = {
 
   // Method / Why Us
   "method.label": { nl: "WAAROM WERKEN MET ONS?", en: "WHY US?" },
-  "method.title": { nl: "Echte impact,<br>geen slides.", en: "Real impact,<br>not just slides." },
+  "method.title.part1": { nl: "Echte ", en: "Real " },
+  "method.title.part2": { nl: "impact,", en: "impact," },
+  "method.title.part3": { nl: "geen slides.", en: "not just slides." },
   "method.usp1.title": { nl: "End-to-end", en: "End-to-end" },
   "method.usp1.text": { nl: "Van strategie tot implementatie en support. Wij blijven aan boord.", en: "From strategy to implementation and support. We stay on board." },
   "method.usp2.title": { nl: "Snel Resultaat", en: "Fast Results" },
