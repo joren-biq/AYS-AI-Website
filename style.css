@@ -12,6 +12,11 @@
   --color-border: rgba(22, 34, 57, 0.1);
   --color-border-light: rgba(255, 255, 255, 0.15);
 
+  /* Glow Colors for Hero */
+  --color-amber-glow: rgba(245, 192, 92, 0.4);
+  --color-blue-glow: rgba(126, 160, 188, 0.3);
+  --color-pink: #fad7d7;
+
   /* Typography */
   --font-main: 'Outfit', sans-serif;
   --font-serif: 'DM Serif Display', serif;
@@ -81,99 +86,68 @@ header {
   width: 100%;
   padding: 1.5rem var(--spacing-container);
   z-index: 999;
-  z-index: 999;
   transition: all 0.4s var(--ease-out);
-  mix-blend-mode: normal; /* Changed from difference to isolate background */
-  color: white; 
+  color: var(--color-dark);
 }
 
-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
+/* Default: dark text for light backgrounds */
+.logo img {
+  height: 120px;
   transition: all 0.4s var(--ease-out);
-  background: transparent;
-  backdrop-filter: none;
+  filter: none; /* Show original colored logo */
 }
 
-/* Scrolled Header State */
-header.header-scrolled::before {
-  background: rgba(0, 0, 0, 0.0); /* Transparent dark for glass effect */
-  backdrop-filter: blur(10px);
+header.header-scrolled .logo img {
+  height: 50px;
 }
 
-
-/* === HEADER STATES === */
-
-/* 1. TOP STATE (Transparent) 
-   - Container has difference mode to flip White -> Black against White BG.
-   - Content is Normal to avoid double inversion.
-*/
-header.header-transparent {
-  background: transparent;
-  mix-blend-mode: difference;
+/* Header on dark backgrounds */
+header.header-on-dark {
   color: white;
 }
 
-header.header-transparent .logo img,
-header.header-transparent .desktop-nav a,
-header.header-transparent .lang-text-btn,
-header.header-transparent .lang-sep {
-  mix-blend-mode: normal; /* Don't invert inside the already inverted container */
+header.header-on-dark .logo img {
+  filter: brightness(0) invert(1); /* White logo */
 }
 
-/* 2. SCROLLED STATE 
-   - Container is Normal (Glassy Dark BG).
-   - Content is Difference to react to page content (Light -> Dark, Dark -> Light).
-*/
-header.header-scrolled {
-  /* BG moved to ::before */
-  mix-blend-mode: normal; 
-  color: white; 
+header.header-on-dark .desktop-nav {
+  background: rgba(255, 255, 255, 0.1);
 }
 
-header.header-scrolled .logo img,
-header.header-scrolled .desktop-nav a,
-header.header-scrolled .lang-text-btn,
-header.header-scrolled .lang-sep {
-  mix-blend-mode: difference;
+header.header-on-dark .btn-dark {
+  background: white;
+  color: var(--color-dark);
 }
 
-/* 3. ACCENT STATE (Partners)
-   - Force everything to Normal + White.
-   - Overrides both previous states.
-*/
+/* Header on accent (amber) backgrounds */
 header.header-on-accent {
-  color: white !important;
-  mix-blend-mode: normal !important;
-  border-bottom: none;
+  color: var(--color-dark);
 }
 
 header.header-on-accent .logo img {
-  filter: brightness(0) invert(1) !important; /* Force white */
-  mix-blend-mode: normal !important;
-}
-
-header.header-on-accent .nav-links a,
-header.header-on-accent .desktop-nav a,
-header.header-on-accent .btn,
-header.header-on-accent .lang-text-btn,
-header.header-on-accent .lang-sep {
-  color: white !important;
-  border-color: white !important;
-  opacity: 1 !important;
-  mix-blend-mode: normal !important;
+  filter: brightness(0); /* Black logo to match dark text */
 }
 
 header.header-on-accent .desktop-nav {
-  /* Optional: explicit background control if needed */
-  background: rgba(0, 0, 0, 0.2) !important; 
+  background: rgba(0, 0, 0, 0.1);
 }
 
-/* Ensure logo stays correct color when header scrolled */
-header.header-scrolled .logo img {
-  filter: brightness(0) invert(1);
+/* Header on light backgrounds (services) - explicit dark styling */
+header.header-on-light {
+  color: var(--color-dark);
+}
+
+header.header-on-light .logo img {
+  filter: none;
+}
+
+header.header-on-light .desktop-nav {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+header.header-on-light .btn-dark {
+  background: var(--color-dark);
+  color: white;
 }
 
 .header-inner {
@@ -182,16 +156,6 @@ header.header-scrolled .logo img {
   align-items: center;
   max-width: 1800px;
   margin: 0 auto;
-}
-
-.logo img {
-  height: 120px; /* Increased to 120px */
-  transition: height 0.4s var(--ease-out);
-  filter: brightness(0) invert(1);
-}
-
-header.header-scrolled .logo img {
-  height: 50px; /* Shrink on scroll to fit 70px header */
 }
 
 /* Ensure actions are horizontal */
@@ -204,8 +168,7 @@ header.header-scrolled .logo img {
 .desktop-nav {
   display: flex;
   gap: 3rem;
-  background: rgba(255,255,255,0.1); /* Restored */
-  /* backdrop-filter: blur(10px); REMOVED: Fixes text blending isolation */
+  background: rgba(0, 0, 0, 0.05);
   padding: 0.75rem 2rem;
   border-radius: var(--radius-pill);
 }
@@ -226,6 +189,16 @@ header.header-scrolled .logo img {
 .btn-sm {
   padding: 0.75rem 1.5rem;
   font-size: 0.9rem;
+}
+
+/* Mobile menu button hidden on desktop */
+.mobile-menu-btn {
+  display: none;
+}
+
+/* Mobile nav hidden on desktop */
+.mobile-nav {
+  display: none;
 }
 
 /* === BUTTONS === */
@@ -264,7 +237,7 @@ header.header-scrolled .logo img {
   font-size: 1.25rem;
 }
 
-/* === LAYOUT / STACKING === */
+/* === LAYOUT / STACKING CARDS === */
 .section-card {
   position: sticky;
   top: 0;
@@ -273,21 +246,14 @@ header.header-scrolled .logo img {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: var(--radius-section) var(--radius-section) 0 0;
-  box-shadow: 0 -10px 50px rgba(0,0,0,0.1);
   overflow: hidden;
   padding: 6rem 0;
 }
 
-.section-card:first-of-type {
-  border-radius: 0;
-}
-
 .hero-section {
   background-color: var(--color-light);
+  overflow: hidden;
   z-index: 1;
-  overflow: hidden; /* For shapes */
-  position: sticky;
 }
 
 .dark-section {
@@ -331,7 +297,191 @@ header.header-scrolled .logo img {
   align-items: center;
 }
 
-/* === HERO & SHAPES === */
+/* === HERO SECTION === */
+
+/* Hero Background with Gradient and Grid */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero-gradient {
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  top: -25%;
+  left: -25%;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 20%, var(--color-amber-glow) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 60% at 20% 80%, var(--color-blue-glow) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 90% 70%, var(--color-pink) 0%, transparent 40%);
+  opacity: 0.8;
+  animation: hero-gradient-float 20s ease-in-out infinite;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(22,34,57,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22,34,57,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+}
+
+@keyframes hero-gradient-float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(20px, -20px) rotate(2deg); }
+  66% { transform: translate(-15px, 15px) rotate(-1deg); }
+}
+
+/* Hero Container */
+.hero-container {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: end;
+  gap: 6rem;
+  position: relative;
+  z-index: 2;
+  padding-top: var(--header-height);
+}
+
+/* Hero Left - Title */
+.hero-left {
+  max-width: 100%;
+}
+
+/* Hero Right - Subtitle & CTAs */
+.hero-right {
+  padding-bottom: 1rem;
+}
+
+/* Hero Badge */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-dark);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--color-accent);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+/* Hero Title */
+.hero-title {
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -3px;
+  margin-bottom: 1.5rem;
+  color: var(--color-dark);
+  animation: fadeInUp 0.8s ease-out 0.1s backwards;
+}
+
+.hero-title .line {
+  display: block;
+}
+
+.hero-title .highlight {
+  color: var(--color-accent);
+  position: relative;
+  display: inline-block;
+}
+
+.hero-title .highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 0.1em;
+  left: 0;
+  width: 100%;
+  height: 0.15em;
+  background: var(--color-accent);
+  opacity: 0.3;
+  border-radius: 4px;
+}
+
+/* Hero Subtitle */
+.hero-subtitle {
+  font-size: 1.35rem;
+  font-weight: 400;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  color: var(--color-dark);
+  opacity: 0.7;
+  animation: fadeInUp 0.8s ease-out 0.2s backwards;
+}
+
+/* Hero Actions */
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.8s ease-out 0.3s backwards;
+}
+
+.btn-primary {
+  background: var(--color-dark);
+  color: white;
+  border: 2px solid var(--color-dark);
+}
+
+.btn-primary:hover {
+  background: transparent;
+  color: var(--color-dark);
+}
+
+.btn-outline-dark {
+  background: transparent;
+  border: 2px solid var(--color-dark);
+  color: var(--color-dark);
+}
+
+.btn-outline-dark:hover {
+  background: var(--color-dark);
+  color: white;
+}
+
+.btn-lg {
+  padding: 1.25rem 2.5rem;
+  font-size: 1.1rem;
+}
+
+
+/* Fade In Up Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Legacy hero-label for compatibility */
 .hero-label {
   font-size: 1rem;
   font-weight: 600;
@@ -341,15 +491,6 @@ header.header-scrolled .logo img {
   opacity: 0.6;
 }
 
-.hero-section h1 {
-  font-size: var(--text-display);
-  font-weight: 800;
-  line-height: 0.9;
-  letter-spacing: -3px;
-  margin-bottom: 2rem;
-  color: var(--color-dark);
-}
-
 .hero-lead {
   font-size: var(--text-h3);
   font-weight: 300;
@@ -357,43 +498,6 @@ header.header-scrolled .logo img {
   margin-bottom: 3rem;
   line-height: 1.4;
   color: var(--color-secondary);
-}
-
-.hero-actions {
-  display: flex;
-  gap: 1rem;
-}
-
-/* HERO SHAPES */
-.hero-shape {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  z-index: 0;
-  opacity: 0.6;
-  animation: float 10s infinite ease-in-out;
-}
-
-.shape-1 {
-  width: 600px;
-  height: 600px;
-  background: var(--color-accent); /* Orange */
-  top: -10%;
-  right: -10%;
-}
-
-.shape-2 {
-  width: 500px;
-  height: 500px;
-  background: var(--color-secondary); /* Blue */
-  bottom: 0%;
-  left: -5%;
-  animation-delay: -5s;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(30px, -30px) scale(1.1); }
 }
 
 /* === LABELS === */
@@ -432,9 +536,9 @@ header.header-scrolled .logo img {
 
 .service-item:hover {
   background-color: white;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-  border-color: var(--color-border);
-  transform: translateY(-5px);
+  box-shadow: 8px 8px 0 var(--color-accent); /* 80s retro hard shadow */
+  border-color: var(--color-dark);
+  transform: translate(-4px, -4px);
 }
 
 .service-icon {
@@ -602,58 +706,258 @@ header.header-scrolled .logo img {
 }
 
 /* === RESPONSIVE === */
-@media (max-width: 1024px) {
-  :root {
-    --radius-section: 40px;
+
+/* Large tablets and small desktops */
+@media (max-width: 1200px) {
+  .hero-container {
+    gap: 4rem;
   }
-  
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
   .grid-2-cols {
     grid-template-columns: 1fr;
   }
-  
+
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }
-  
-  /* Disable sticky stacking on mobile to prevent scroll locking */
+
+  /* Disable sticky stacking on mobile */
   .section-card {
     position: relative;
-    top: auto;
     min-height: auto;
-    overflow: visible;
-    border-radius: 0; /* Remove rounded tops for cleaner flow */
   }
 
-  .section-card:first-of-type {
-    border-radius: 0;
+  /* Hero responsive */
+  .hero-section {
+    min-height: auto;
+    padding: 8rem 0 4rem;
   }
 
-  /* Add spacing between sections since they don't overlap anymore */
-  .section-card + .section-card {
-    border-top: 1px solid var(--color-border);
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
   }
 
-  .header-inner {
+  .hero-left {
+    max-width: 100%;
+  }
+
+  .hero-right {
+    padding-bottom: 0;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    letter-spacing: -2px;
+  }
+
+  .hero-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
+  }
+
+  .hero-actions {
     justify-content: center;
   }
-  .desktop-nav, .header-actions {
-    display: none; /* Simplify for MVP mobile */
+
+  /* Header mobile */
+  .header-inner {
+    justify-content: space-between;
   }
-  .logo {
-    margin: 0 auto;
+
+  .desktop-nav {
+    display: none;
   }
-  
-  /* Make sure cookie banner works on mobile too */
+
+  .header-actions .btn {
+    display: none;
+  }
+
+  .logo img {
+    height: 80px;
+  }
+
+  header.header-scrolled .logo img {
+    height: 45px;
+  }
+
+  /* Mobile hamburger menu */
+  .mobile-menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .mobile-menu-btn span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  /* Mobile nav overlay */
+  .mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--color-dark);
+    z-index: 998;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-nav.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-nav a {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .mobile-nav .lang-switcher {
+    margin-top: 2rem;
+  }
+
+  /* Cookie banner mobile */
   .cookie-banner {
     flex-direction: column;
     padding: 1.5rem;
     gap: 1.5rem;
     text-align: center;
   }
-  
+
   .cookie-actions {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* Small tablets and large phones */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: clamp(2rem, 10vw, 3.5rem);
+    letter-spacing: -1px;
+  }
+
+  .hero-badge {
+    font-size: 0.65rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-col {
+    padding: 1rem 0;
+  }
+
+  .services-track {
+    grid-template-columns: 1fr;
+  }
+
+  .service-item {
+    padding: 2rem;
+  }
+
+  .service-content > p:not(.service-tag) {
+    min-height: auto;
+  }
+
+  .partners-logos {
+    gap: 2rem !important;
+  }
+
+  .partners-logos img {
+    height: 80px !important;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 6rem 0 3rem;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .btn-lg {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .method-text h2,
+  .footer-cta h2 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .usp-row {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .usp-number {
+    margin: 0 auto;
   }
 }
 
@@ -673,10 +977,10 @@ header.header-scrolled .logo img {
 .lang-text-btn {
   background: transparent;
   border: none;
-  color: white;
+  color: inherit;
   padding: 0.25rem;
   font-family: var(--font-main);
-  font-weight: 400; /* Default normal */
+  font-weight: 400;
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 0.9rem;
@@ -688,17 +992,9 @@ header.header-scrolled .logo img {
 }
 
 .lang-text-btn.active {
-  font-weight: 800; /* Bold for selected */
+  font-weight: 800;
   opacity: 1;
-  text-decoration: underline; /* Optional: adds clarity */
-}
-
-/* Header Scrolled/Accent Adaptations for Lang Btn */
-/* Removed hardcoded colors to rely on mix-blend-mode logic above */
-
-header.header-on-accent .lang-text-btn,
-header.header-on-accent .lang-sep {
-  color: white !important;
+  text-decoration: underline;
 }
 
 /* === COOKIE BANNER === */

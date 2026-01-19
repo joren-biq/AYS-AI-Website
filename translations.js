@@ -6,12 +6,13 @@ export const translations = {
   "nav.contact": { nl: "Contact", en: "Contact" },
 
   // Hero
-  "hero.label": { nl: "✦ APPLIED AI AGENCY", en: "✦ APPLIED AI AGENCY" },
-  "hero.title": { nl: "Applied AI - dat werkt", en: "Applied AI - that works" },
-  "hero.subtitle": { nl: "voor jou.", en: "for you." },
-  "hero.lead": { 
-    nl: "Bij 'at your service' helpen we bedrijven hun volgende stap zetten in AI. Van strategie tot implementatie, van serviceplatform tot AI-agents.", 
-    en: "At 'at your service', we help companies take their next step in AI. From strategy to implementation, from service platforms to AI agents." 
+  "hero.badge": { nl: "APPLIED AI AGENCY", en: "APPLIED AI AGENCY" },
+  "hero.line1": { nl: "Applied AI", en: "Applied AI" },
+  "hero.line2": { nl: "dat ", en: "that " },
+  "hero.line3": { nl: "werkt.", en: "works." },
+  "hero.lead": {
+    nl: "Bij 'at your service' helpen we bedrijven hun volgende stap zetten in AI. Van strategie tot implementatie, van serviceplatform tot AI-agents.",
+    en: "At 'at your service', we help companies take their next step in AI. From strategy to implementation, from service platforms to AI agents."
   },
   "hero.cta.start": { nl: "Start uw project", en: "Start your project" },
   "hero.cta.more": { nl: "Ontdek meer", en: "Learn more" },

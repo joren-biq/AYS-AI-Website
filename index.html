@@ -17,7 +17,7 @@
     <header id="main-header">
       <div class="header-inner">
         <a href="#" class="logo">
-          <img src="./At-your-service-LOGO_ZWART.png" alt="at your service Logo" />
+          <img src="./At-your-service-LOGO_KLEUR.png" alt="at your service Logo" />
         </a>
         <nav class="desktop-nav">
           <a href="#method" data-i18n="nav.method">Aanpak</a>
@@ -33,31 +33,59 @@
              <button class="lang-text-btn" data-lang="en">EN</button>
            </div>
            <a href="#contact" class="btn btn-sm btn-dark" data-i18n="nav.contact">Contact</a>
+           <!-- Mobile Menu Button -->
+           <button class="mobile-menu-btn" aria-label="Toggle menu">
+             <span></span>
+             <span></span>
+             <span></span>
+           </button>
         </div>
       </div>
     </header>
 
+    <!-- Mobile Navigation Overlay -->
+    <nav class="mobile-nav">
+      <a href="#method" data-i18n="nav.method">Aanpak</a>
+      <a href="#services" data-i18n="nav.services">Diensten</a>
+      <a href="#partners" data-i18n="nav.partners">Partners</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <div class="lang-switcher">
+        <button class="lang-text-btn active" data-lang="nl">NL</button>
+        <span class="lang-sep">/</span>
+        <button class="lang-text-btn" data-lang="en">EN</button>
+      </div>
+    </nav>
+
     <main>
       <!-- Hero Section -->
       <section class="section-card hero-section">
-        <!-- Vibrant Shapes -->
-        <div class="hero-shape shape-1"></div>
-        <div class="hero-shape shape-2"></div>
+        <!-- Background Effects -->
+        <div class="hero-bg">
+          <div class="hero-gradient"></div>
+          <div class="hero-grid"></div>
+        </div>
 
         <div class="container hero-container">
-          <div class="hero-label" data-i18n="hero.label">✦ APPLIED AI AGENCY</div>
-          <h1><span data-i18n="hero.title">Applied AI - that works</span><br/><span class="text-italic" data-i18n="hero.subtitle">for you.</span></h1>
-          <p class="hero-lead" data-i18n="hero.lead">
-            Bij 'at your service' helpen we bedrijven hun volgende stap zetten in AI.
-            Van strategie tot implementatie, van serviceplatform tot AI-agents.
-          </p>
-          <div class="hero-actions">
-            <a href="#contact" class="btn btn-lg btn-dark">
-              <span data-i18n="hero.cta.start">Start uw project</span> <i data-lucide="arrow-right"></i>
-            </a>
-            <a href="#services" class="btn btn-lg btn-outline" data-i18n="hero.cta.more">
-              Ontdek meer
-            </a>
+          <div class="hero-left">
+            <div class="hero-badge" data-i18n="hero.badge">APPLIED AI AGENCY</div>
+            <h1 class="hero-title">
+              <span class="line" data-i18n="hero.line1">Applied AI</span>
+              <span class="line"><span data-i18n="hero.line2">dat </span><span class="highlight" data-i18n="hero.line3">werkt.</span></span>
+            </h1>
+          </div>
+          <div class="hero-right">
+            <p class="hero-subtitle" data-i18n="hero.lead">
+              Bij 'at your service' helpen we bedrijven hun volgende stap zetten in AI.
+              Van strategie tot implementatie, van serviceplatform tot AI-agents.
+            </p>
+            <div class="hero-actions">
+              <a href="#contact" class="btn btn-lg btn-primary">
+                <span data-i18n="hero.cta.start">Start uw project</span> <i data-lucide="arrow-right"></i>
+              </a>
+              <a href="#services" class="btn btn-lg btn-outline-dark" data-i18n="hero.cta.more">
+                Ontdek meer
+              </a>
+            </div>
           </div>
         </div>
       </section>

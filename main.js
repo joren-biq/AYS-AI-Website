@@ -13,7 +13,9 @@ const elements = {
   btnAccept: document.getElementById('cookie-accept'),
   btnDecline: document.getElementById('cookie-decline'),
   header: document.querySelector('header'),
-  partnersSection: document.getElementById('partners')
+  partnersSection: document.getElementById('partners'),
+  mobileMenuBtn: document.querySelector('.mobile-menu-btn'),
+  mobileNav: document.querySelector('.mobile-nav')
 };
 
 // --- LANGUAGE LOGIC ---
@@ -85,21 +87,53 @@ function declineCookies() {
 // --- HEADER / SCROLL LOGIC ---
 function checkHeaderState() {
   const scrollY = window.scrollY;
+  const headerHeight = elements.header ? elements.header.offsetHeight : 100;
+
+  // Get all sections to check which one the header is over
+  const darkSections = document.querySelectorAll('.dark-section');
+  const lightSections = document.querySelectorAll('.light-section');
+  const accentSections = document.querySelectorAll('.accent-section');
+
+  let isOnDark = false;
+  let isOnLight = false;
   let isOnAccent = false;
 
-  if (elements.partnersSection) {
-    const rect = elements.partnersSection.getBoundingClientRect();
-    const headerHeight = elements.header.offsetHeight;
+  // Check dark sections (method section)
+  darkSections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= headerHeight && rect.bottom >= 0) {
+      isOnDark = true;
+    }
+  });
+
+  // Check light sections (services)
+  lightSections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= headerHeight && rect.bottom >= 0) {
+      isOnLight = true;
+      isOnDark = false;
+    }
+  });
+
+  // Check accent sections (partners)
+  accentSections.forEach(section => {
+    const rect = section.getBoundingClientRect();
     if (rect.top <= headerHeight && rect.bottom >= 0) {
       isOnAccent = true;
+      isOnDark = false;
+      isOnLight = false;
     }
-  }
+  });
 
-  // Handle Transparent/Difference Mode (Only at top, not on accent)
-  if (scrollY <= 50 && !isOnAccent) {
-    elements.header.classList.add('header-transparent');
-  } else {
-    elements.header.classList.remove('header-transparent');
+  // Check footer-cta specifically (it's dark)
+  const footerCta = document.querySelector('.footer-cta');
+  if (footerCta) {
+    const rect = footerCta.getBoundingClientRect();
+    if (rect.top <= headerHeight && rect.bottom >= 0) {
+      isOnDark = true;
+      isOnLight = false;
+      isOnAccent = false;
+    }
   }
 
   // Handle Scrolled Mode
@@ -109,15 +143,43 @@ function checkHeaderState() {
     elements.header.classList.remove('header-scrolled');
   }
 
-  // Handle Accent Mode (Force White)
+  // Handle Dark Mode
+  if (isOnDark) {
+    elements.header.classList.add('header-on-dark');
+  } else {
+    elements.header.classList.remove('header-on-dark');
+  }
+
+  // Handle Light Mode
+  if (isOnLight) {
+    elements.header.classList.add('header-on-light');
+  } else {
+    elements.header.classList.remove('header-on-light');
+  }
+
+  // Handle Accent Mode
   if (isOnAccent) {
     elements.header.classList.add('header-on-accent');
   } else {
     elements.header.classList.remove('header-on-accent');
   }
-  
-  // Clean up
-  elements.header.style.mixBlendMode = '';
+}
+
+// --- MOBILE MENU ---
+function toggleMobileMenu() {
+  if (elements.mobileMenuBtn && elements.mobileNav) {
+    elements.mobileMenuBtn.classList.toggle('active');
+    elements.mobileNav.classList.toggle('active');
+    document.body.style.overflow = elements.mobileNav.classList.contains('active') ? 'hidden' : '';
+  }
+}
+
+function closeMobileMenu() {
+  if (elements.mobileMenuBtn && elements.mobileNav) {
+    elements.mobileMenuBtn.classList.remove('active');
+    elements.mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 }
 
 // --- INITIALIZATION ---
@@ -144,4 +206,52 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.lucide) {
     lucide.createIcons();
   }
+
+  // 5. Mobile Menu
+  if (elements.mobileMenuBtn) {
+    elements.mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+  }
+
+  // Close mobile menu when clicking nav links
+  if (elements.mobileNav) {
+    elements.mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    // Also handle lang buttons in mobile nav
+    elements.mobileNav.querySelectorAll('.lang-text-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setLanguage(btn.dataset.lang);
+      });
+    });
+  }
+
+  // 6. Handle anchor navigation for sticky sections
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === '#') return;
+
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        e.preventDefault();
+
+        // Temporarily remove sticky positioning from all sections
+        const sections = document.querySelectorAll('.section-card');
+        sections.forEach(section => {
+          section.style.position = 'relative';
+        });
+
+        // Scroll to target
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+
+        // Restore sticky positioning after scroll completes
+        setTimeout(() => {
+          sections.forEach(section => {
+            section.style.position = '';
+          });
+        }, 800);
+      }
+    });
+  });
 });
