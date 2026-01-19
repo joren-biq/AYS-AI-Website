@@ -82,7 +82,7 @@ export const translations = {
   "footer.col.contact": { nl: "Contact", en: "Contact" },
   "footer.col.menu": { nl: "Menu", en: "Menu" },
   "footer.col.socials": { nl: "Socials", en: "Socials" },
-  "footer.copyright": { nl: "&copy; 2026 at your service. All rights reserved.", en: "&copy; 2026 at your service. All rights reserved." },
+  "footer.copyright": { nl: "© 2026 at your service. All rights reserved.", en: "© 2026 at your service. All rights reserved." },
 
   // Cookie Banner
   "cookie.text": { nl: "Wij gebruiken cookies om uw ervaring te verbeteren.", en: "We use cookies to enhance your experience." },

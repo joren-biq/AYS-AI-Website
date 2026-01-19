@@ -26,11 +26,23 @@ function setLanguage(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (translations[key] && translations[key][lang]) {
-      // Use innerHTML for keys that might contain HTML (like <br>)
-      if (key.includes('title') || key.includes('cta') || key.includes('desc')) {
-         el.innerHTML = translations[key][lang];
+      const translatedText = translations[key][lang];
+
+      // Safely handle <br> tags by replacing with actual DOM elements
+      if (translatedText.includes('<br>')) {
+        // Clear the element
+        el.textContent = '';
+        // Split by <br> and create text nodes with br elements
+        const parts = translatedText.split('<br>');
+        parts.forEach((part, index) => {
+          el.appendChild(document.createTextNode(part));
+          if (index < parts.length - 1) {
+            el.appendChild(document.createElement('br'));
+          }
+        });
       } else {
-         el.textContent = translations[key][lang];
+        // Use textContent for everything else (safe from XSS)
+        el.textContent = translatedText;
       }
     }
   });
