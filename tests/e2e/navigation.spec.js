@@ -30,8 +30,9 @@ test.describe('Navigation', () => {
   test('should navigate to services section', async ({ page }) => {
     await navigateToSection(page, '#services');
 
-    // Wait for URL hash to update
-    await page.waitForURL('**/#services', { timeout: 5000 });
+    // Wait for scroll to complete and verify URL hash
+    await page.waitForTimeout(500);
+    expect(page.url()).toContain('#services');
 
     // Services section should be visible in viewport
     const servicesSection = page.locator('#services');
@@ -40,7 +41,8 @@ test.describe('Navigation', () => {
 
   test('should navigate to method section', async ({ page }) => {
     await navigateToSection(page, '#method');
-    await page.waitForURL('**/#method', { timeout: 5000 });
+    await page.waitForTimeout(500);
+    expect(page.url()).toContain('#method');
 
     const methodSection = page.locator('#method');
     await expect(methodSection).toBeInViewport();
@@ -48,7 +50,8 @@ test.describe('Navigation', () => {
 
   test('should navigate to partners section', async ({ page }) => {
     await navigateToSection(page, '#partners');
-    await page.waitForURL('**/#partners', { timeout: 5000 });
+    await page.waitForTimeout(500);
+    expect(page.url()).toContain('#partners');
 
     const partnersSection = page.locator('#partners');
     await expect(partnersSection).toBeInViewport();
@@ -56,7 +59,8 @@ test.describe('Navigation', () => {
 
   test('should navigate to contact section', async ({ page }) => {
     await navigateToSection(page, '#contact');
-    await page.waitForURL('**/#contact', { timeout: 5000 });
+    await page.waitForTimeout(500);
+    expect(page.url()).toContain('#contact');
 
     const contactSection = page.locator('#contact');
     await expect(contactSection).toBeInViewport();
@@ -65,58 +69,58 @@ test.describe('Navigation', () => {
   test('should update URL hash correctly', async ({ page }) => {
     // Navigate to services
     await navigateToSection(page, '#services');
-    await page.waitForURL('**/#services', { timeout: 5000 });
+    await page.waitForTimeout(500);
     expect(page.url()).toContain('#services');
 
     // Navigate to method
     await navigateToSection(page, '#method');
-    await page.waitForURL('**/#method', { timeout: 5000 });
+    await page.waitForTimeout(500);
     expect(page.url()).toContain('#method');
 
     // Navigate to partners
     await navigateToSection(page, '#partners');
-    await page.waitForURL('**/#partners', { timeout: 5000 });
+    await page.waitForTimeout(500);
     expect(page.url()).toContain('#partners');
   });
 
   test('should navigate through multiple sections sequentially', async ({ page }) => {
     // Navigate to services
     await navigateToSection(page, '#services');
-    await page.waitForURL('**/#services', { timeout: 5000 });
     await page.waitForTimeout(500);
     expect(page.url()).toContain('#services');
 
     // Navigate to method
     await navigateToSection(page, '#method');
-    await page.waitForURL('**/#method', { timeout: 5000 });
     await page.waitForTimeout(500);
     expect(page.url()).toContain('#method');
 
     // Navigate to partners
     await navigateToSection(page, '#partners');
-    await page.waitForURL('**/#partners', { timeout: 5000 });
     await page.waitForTimeout(500);
     expect(page.url()).toContain('#partners');
 
     // Navigate to contact
     await navigateToSection(page, '#contact');
-    await page.waitForURL('**/#contact', { timeout: 5000 });
     await page.waitForTimeout(500);
     expect(page.url()).toContain('#contact');
   });
 
   test('should perform smooth scroll to sections', async ({ page }) => {
-    // Get initial scroll position
-    const initialScroll = await page.evaluate(() => window.scrollY);
+    // Scroll to top first to ensure known starting position
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(300);
 
-    // Click a section link
+    const initialScroll = await page.evaluate(() => window.scrollY);
+    expect(initialScroll).toBe(0);
+
+    // Click a section link (services is further down)
     await navigateToSection(page, '#services');
 
-    // Wait a bit and check scroll position changed
+    // Wait for smooth scroll and check position changed
     await page.waitForTimeout(500);
     const newScroll = await page.evaluate(() => window.scrollY);
 
-    // Scroll position should have changed
+    // Scroll position should have increased
     expect(newScroll).toBeGreaterThan(initialScroll);
   });
 
@@ -127,8 +131,7 @@ test.describe('Navigation', () => {
     // Navigate on mobile using helper (which handles mobile menu)
     await navigateToSection(page, '#services');
 
-    // Wait for URL to update
-    await page.waitForURL('**/#services', { timeout: 5000 });
+    // Wait for navigation to complete
     await page.waitForTimeout(500);
 
     // Should navigate correctly

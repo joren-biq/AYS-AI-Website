@@ -25,9 +25,17 @@ async function switchLanguage(page, lang) {
 
 test.describe('Cookie Consent', () => {
   test.beforeEach(async ({ page, context }) => {
-    // Clear storage before each test
+    // Clear all storage before each test
     await context.clearCookies();
+    // Go to page to establish domain context
     await page.goto('/');
+    // Clear localStorage and sessionStorage
+    await page.evaluate(() => {
+      localStorage.clear();
+      sessionStorage.clear();
+    });
+    // Reload page with clean storage
+    await page.reload();
   });
 
   test('should display cookie banner on first visit', async ({ page }) => {

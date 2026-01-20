@@ -254,6 +254,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Scroll to target
         targetElement.scrollIntoView({ behavior: 'smooth' });
 
+        // Update URL hash manually since we prevented default
+        window.location.hash = targetId;
+
         // Restore sticky positioning after scroll completes
         setTimeout(() => {
           sections.forEach(section => {

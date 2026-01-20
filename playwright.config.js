@@ -53,11 +53,10 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-      // Run: cookie consent, language switching, mobile menu (core functionality)
+      // Run: cookie consent, language switching (core functionality)
       testMatch: [
         '**/cookie-consent.spec.js',
         '**/language-switching.spec.js',
-        '**/mobile-menu.spec.js',
       ],
     },
 

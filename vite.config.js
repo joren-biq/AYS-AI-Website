@@ -2,9 +2,11 @@ import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // Set base path for GitHub Pages subdomain deployment
-  // Change to '/' if using a custom domain
-  base: '/AYS-AI-Website/',
+  // Set base path based on deployment target
+  // GitHub Pages: /AYS-AI-Website/
+  // OVHCloud: /
+  // Local tests: /
+  base: process.env.VITE_BASE_PATH || '/',
 
   build: {
     outDir: 'dist',

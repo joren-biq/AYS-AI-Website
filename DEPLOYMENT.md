@@ -1,8 +1,34 @@
-# OVHCloud FTP Deployment Setup Guide
+# Dual Deployment Setup Guide
 
-This guide explains how to configure automated deployment to OVHCloud via FTP.
+This guide explains the automated dual deployment strategy:
+- **GitHub Pages** - Preview/staging environment (https://joren-biq.github.io/AYS-AI-Website/)
+- **OVHCloud** - Production environment (https://at-yourservice.ai)
 
-## Prerequisites
+## Deployment Flow
+
+When you push to the `main` branch, the CI/CD pipeline automatically:
+
+### 1. Run Tests
+- ✅ **Unit Tests** (112 tests) - Fast feedback on code logic
+- ✅ **Build Validation** (25 tests) - Verify build integrity
+
+### 2. Build Artifacts
+- 🔨 **GitHub Pages Build** - Built with base path `/AYS-AI-Website/`
+- 🔨 **OVHCloud Build** - Built with base path `/`
+
+### 3. Run E2E Tests
+- 🧪 **E2E Tests** (30 tests) - Cross-browser integration tests
+  - Chromium: cookies, language switching
+  - Firefox: navigation
+  - Mobile Chrome: header scroll, mobile menu
+
+### 4. Deploy
+- 📦 **GitHub Pages** - Deploys if Unit Tests & Build Validation pass
+- 🚀 **OVHCloud** - Deploys if Unit Tests, Build Validation & E2E Tests pass
+
+This means GitHub Pages will always have the latest passing build, while OVHCloud only deploys fully tested releases.
+
+## Prerequisites for OVHCloud
 
 You need the following information from your OVHCloud hosting:
 1. FTP server hostname (e.g., `ftp.cluster0XX.hosting.ovh.net`)
@@ -91,10 +117,12 @@ Once secrets are configured:
 
 2. The workflow will:
    - ✅ Run unit tests (112 tests)
-   - ✅ Build the project
+   - ✅ Build for GitHub Pages (base: `/AYS-AI-Website/`)
+   - ✅ Build for OVHCloud (base: `/`)
    - ✅ Run build validation (25 tests)
-   - ⚠️ Run E2E tests (35 tests, optional)
-   - 🚀 Deploy to OVHCloud via FTP
+   - ✅ Run E2E tests (30 tests)
+   - 📦 Deploy to GitHub Pages (if unit tests + build validation pass)
+   - 🚀 Deploy to OVHCloud via FTP (if all tests pass)
 
 3. Monitor deployment:
    - Go to **Actions** tab in GitHub
@@ -103,11 +131,19 @@ Once secrets are configured:
 
 ## Deployment Behavior
 
-### When Deployment Runs:
+### GitHub Pages Deployment:
 - ✅ Only on `main` branch
 - ✅ Only on direct pushes (not PRs)
-- ✅ Only after all critical tests pass
-- ⚠️ E2E test failures won't block deployment
+- ✅ Requires: Unit Tests ✅ + Build Validation ✅
+- ⚠️ E2E tests do NOT block GitHub Pages deployment
+- 🌐 URL: https://joren-biq.github.io/AYS-AI-Website/
+
+### OVHCloud Deployment:
+- ✅ Only on `main` branch
+- ✅ Only on direct pushes (not PRs)
+- ✅ Requires: Unit Tests ✅ + Build Validation ✅ + E2E Tests ✅
+- ⚠️ E2E test failures WILL block OVHCloud deployment
+- 🌐 URL: https://at-yourservice.ai
 
 ### What Gets Deployed:
 - Contents of `dist/` folder (built files)
@@ -190,6 +226,41 @@ dangerous-clean-slate: true
 ```
 
 Only use this if you're sure!
+
+## GitHub Pages Setup
+
+GitHub Pages deployment is automatic once the workflow is configured. No additional secrets needed!
+
+### Enable GitHub Pages:
+
+1. **Repository Settings:**
+   - Go to: https://github.com/joren-biq/AYS-AI-Website/settings/pages
+   - Source: **GitHub Actions** (not "Deploy from a branch")
+   - Click Save
+
+2. **First Deployment:**
+   - Push to main branch
+   - Workflow will automatically deploy to GitHub Pages
+   - URL: https://joren-biq.github.io/AYS-AI-Website/
+
+3. **Verify Deployment:**
+   - Go to: https://github.com/joren-biq/AYS-AI-Website/actions
+   - Check "deploy-github-pages" job succeeded
+   - Visit https://joren-biq.github.io/AYS-AI-Website/
+
+### Troubleshooting GitHub Pages:
+
+**If deployment fails with permission errors:**
+1. Go to Settings → Actions → General
+2. Scroll to "Workflow permissions"
+3. Select "Read and write permissions"
+4. Enable "Allow GitHub Actions to create and approve pull requests"
+5. Click Save
+
+**If site doesn't load:**
+- Hard refresh: Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)
+- Check that source is set to "GitHub Actions" not "Deploy from a branch"
+- Verify workflow completed successfully in Actions tab
 
 ## Support
 
