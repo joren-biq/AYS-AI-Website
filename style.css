@@ -576,7 +576,7 @@ header.header-on-light .btn-dark {
 .service-list {
   list-style: none;
   margin-top: auto;
-  padding-top: 2rem;
+  padding-top: 1rem;
 }
 
 .service-list li {
