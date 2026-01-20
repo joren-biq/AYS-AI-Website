@@ -569,7 +569,7 @@ header.header-on-light .btn-dark {
 
 /* Description text */
 .service-content > p:not(.service-tag) {
-  min-height: 10rem; /* Increased to ensure alignment for 4-line texts */
+  min-height: 6rem; /* Reduced whitespace while maintaining card alignment */
   margin-bottom: 0;
 }
 
