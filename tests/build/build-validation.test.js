@@ -86,10 +86,10 @@ describe('Build Validation', () => {
       const assetsPath = join(distPath, 'assets');
       const files = readdirSync(assetsPath);
 
-      // Check that files have hash patterns (e.g., index-CVv6hINm.js)
+      // Check that files have hash patterns (e.g., index-Bzr2uX_F.js)
       const hashedFiles = files.filter(f => {
-        // Look for pattern: name-hash.ext (hash can be alphanumeric)
-        return /\w+-[a-zA-Z0-9]{8,}\.(js|css)/.test(f);
+        // Look for pattern: name-hash.ext (hash can be alphanumeric + underscore/hyphen for base64)
+        return /\w+-[a-zA-Z0-9_-]{6,}\.(js|css)/.test(f);
       });
 
       expect(hashedFiles.length).toBeGreaterThan(0);
